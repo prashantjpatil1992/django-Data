@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Form</title>
+</head>
+<body>
+  {% if messages %}
+  {% for message in messages %}
+  <h4>{{message}}</h4>
+
+  {% endfor %}
+  {% endif %}
+    <form action="" method="get">
+      {{form.as_p}}
+      <input type="submit" value="Submit" />
+    </form>
+
+    <h1>{{data}}</h1>
+
+    <form>
+      {% for i in data %}
+      name:<input type="text" value={{i.name}} />
+      <br><br>
+      age:<input type="number" value={{i.age}} />
+      {% endfor %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ORM</title>
+</head>
+<body>
+   <h1>{{data}}</h1>
+
+
+  
+   {% for i in data %}
+
+       <h5>name: {{i.name}}</h5>
+       <h5>age: {{i.age}}</h5>
+       <h5>salary: {{i.salary}}</h5>
+       <h5>city: {{i.city}}</h5>
+
+       {% endfor %}
+  
+    <h5>ID: {{data.id}}</h5>
+    <h5>name: {{data.name}}</h5>
+       <h5>age: {{data.age}}</h5>
+       <h5>salary: {{data.salary}}</h5>
+       <h5>city: {{data.city}}</h5>
+
+</body>
+</html>

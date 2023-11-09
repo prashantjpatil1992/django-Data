@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Loop</title>
+</head>
+<body>
+    {% if value %}
+
+    {% for i in value %}
+        <h4>{{i}}</h4>
+    {% endfor %}
+
+     {% else %}
+     <h1>There is no value in value</h1>
+    {% endif %}
+
+    {% for j in value  %}
+       <h1>{{j}}</h1>
+       {% empty %}
+       <h1>No Data</h1>
+    {% endfor %}
+
+   
+    <h1>{{value1.name}}</h1>
+    <h1>{{value1.age}}</h1>
+    <h1>{{value1.city}}</h1>
+
+</body>
+</html>

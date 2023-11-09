@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Conditions</title>
+</head>
+<body>
+    <h1>Hello</h1>
+
+
+   
+    {% if value == 22 and value1 == 33 %}
+       <h1>Right</h1>
+       {{value}}
+    {% else %}
+       <h1>Wrong</h1>
+    {% endif %}
+
+
+    {% if value1 > 22 %}
+       <h1>Right</h1>
+    {% else %}
+       <h1>Wrong</h1>
+    {% endif %}
+    
+
+    {% if 'xyz' in value2 %}
+       <h1>Membership Operator True</h1>
+    {% else %}
+       <h1>Membership Operator False</h1>
+    {% endif %}
+    
+    {% if value3 %}
+       <h1>Value prensent in value3</h1>
+    {% else %}
+       <h1>Value not prensent in value3</h1>
+    {% endif %}
+
+    
+</body>
+</html>
