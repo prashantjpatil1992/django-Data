@@ -14,3 +14,4 @@ class Django_Khalid(models.Model):
     
 class Cart(models.Model):
     django_khalid = models.ForeignKey(Django_Khalid, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1,null=True)

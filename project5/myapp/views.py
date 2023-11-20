@@ -45,21 +45,39 @@ def Delete(request,id):
     
 def cart(request):
     a = Django_Khalid.objects.all()
-    return render (request, 'cart.html',{'data':a})
+    cart1 = Cart.objects.all().values_list('django_khalid_id', flat=True)
+    count = cart1.count()
+    return render (request, 'cart.html',{'data':a, 'cartcount':count})
 
 def add_to_cart(request):
     if request.method == "GET":
         cid = request.GET.get('cid')
         print(cid)
-        store = Cart.objects.create(django_khalid_id=cid)
-        store.save()
+        item,store = Cart.objects.get_or_create(django_khalid_id=cid)
+        print(item,store)
+        
+        if not store:
+            item.quantity += 1
+            item.save()
+        
         return HttpResponseRedirect('/main/cart/')
     
 def view_cart(request):
     cart1 = Cart.objects.all().values_list('django_khalid_id', flat=True)
     cartdata = Django_Khalid.objects.filter(id__in=cart1)
     print(cart1)
-    return render(request, 'show cart.html',{'data':cartdata})
+    
+    quantity = Cart.objects.all()
+    
+    # print(quantity.values_list('quantity',flat=True))
+    
+    return render(request, 'show cart.html',{'data':cartdata, 'quantity':quantity})
+
+def remove_cart(request,id):
+    if request.method == 'GET':
+        os = Cart.objects.filter(django_khalid_id=id)
+        os.delete()
+        return HttpResponseRedirect('/main/viewcart/')
         
 
 

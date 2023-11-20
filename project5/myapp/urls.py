@@ -9,5 +9,6 @@ urlpatterns = [
      path('<int:id>',views.Delete,name="delete"),
      path('cart/',views.cart, name="cart"),
      path('addtocart/',views.add_to_cart,name='addtocart'),
-     path('viewcart/',views.view_cart)
+     path('viewcart/',views.view_cart,name='viewcart'),
+     path('removecart/<int:id>',views.remove_cart, name='removecart')
 ]
