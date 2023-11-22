@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Django_Khalid(models.Model):
@@ -13,5 +14,6 @@ class Django_Khalid(models.Model):
     city = models.CharField(max_length=100, default=False)
     
 class Cart(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     django_khalid = models.ForeignKey(Django_Khalid, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1,null=True)

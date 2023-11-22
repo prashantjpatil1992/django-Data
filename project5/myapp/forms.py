@@ -1,5 +1,7 @@
 from django import forms
 from .models import Django_Khalid
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class django_form(forms.ModelForm):
     gen = (('Male','Male'),('Female','Female'),('Other','Other'))
@@ -10,4 +12,9 @@ class django_form(forms.ModelForm):
     class Meta:
         model = Django_Khalid
         fields = '__all__'
+        
+class SignUp_Form(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email']
     

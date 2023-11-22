@@ -1,7 +1,9 @@
 from django.shortcuts import render,HttpResponseRedirect
 from .models import Django_Khalid, Cart
-from .forms import django_form
+from .forms import django_form, SignUp_Form
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+
 
 # Create your views here.
 
@@ -44,40 +46,108 @@ def Delete(request,id):
     
     
 def cart(request):
-    a = Django_Khalid.objects.all()
-    cart1 = Cart.objects.all().values_list('django_khalid_id', flat=True)
-    count = cart1.count()
-    return render (request, 'cart.html',{'data':a, 'cartcount':count})
+    if request.user.is_authenticated:
+        print(request.user)
+        a = Django_Khalid.objects.all()
+        cart1 = Cart.objects.filter(user=request.user)
+        count = cart1.count()
+        return render (request, 'cart.html',{'data':a, 'cartcount':count})
+    else:
+        return HttpResponseRedirect('/main/login/')
 
 def add_to_cart(request):
-    if request.method == "GET":
-        cid = request.GET.get('cid')
-        print(cid)
-        item,store = Cart.objects.get_or_create(django_khalid_id=cid)
-        print(item,store)
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            cid = request.GET.get('cid')
+            
+            item,store = Cart.objects.get_or_create(django_khalid_id=cid,user=request.user)
+            print(item,store)
+            
+            if not store:
+                item.quantity += 1
+                item.save()
+            
+            return HttpResponseRedirect('/main/cart/')
         
-        if not store:
-            item.quantity += 1
-            item.save()
+def cart_increse(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            cid = request.GET.get('cid')
+            
+            item,store = Cart.objects.get_or_create(django_khalid_id=cid)
+            print(item,store)
+            if not store:
+                item.quantity += 1
+                item.save()
+                return HttpResponseRedirect('/main/viewcart/')
         
-        return HttpResponseRedirect('/main/cart/')
-    
+def cart_decrese(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            cid = request.GET.get('cid')
+            
+            item,store = Cart.objects.get_or_create(django_khalid_id=cid)
+            print(item,store)
+            if not store:
+                item.quantity -= 1
+                item.save()
+                if item.quantity < 1:
+                    item.delete()
+            
+                
+                return HttpResponseRedirect('/main/viewcart/')
+        
 def view_cart(request):
-    cart1 = Cart.objects.all().values_list('django_khalid_id', flat=True)
-    cartdata = Django_Khalid.objects.filter(id__in=cart1)
-    print(cart1)
+    if request.user.is_authenticated:
+        
+        
+        # cart1 = Cart.objects.all().values_list('django_khalid_id', flat=True)
+        # cartdata = Django_Khalid.objects.filter(id__in=cart1)
+        # print(cart1)
+        cart1 = Cart.objects.filter(user=request.user).values_list('django_khalid_id',flat=True)
+        cartdata = Django_Khalid.objects.filter(id__in=cart1)
+        print(cart1)
+        print(request.user)
+        quantity = Cart.objects.all()
     
-    quantity = Cart.objects.all()
-    
-    # print(quantity.values_list('quantity',flat=True))
-    
-    return render(request, 'show cart.html',{'data':cartdata, 'quantity':quantity})
+        # print(quantity.values_list('quantity',flat=True))
+        
+        return render(request, 'show cart.html',{'data':cartdata,'quantity':quantity})
+    else:
+        return HttpResponseRedirect('/main/login/')
 
 def remove_cart(request,id):
-    if request.method == 'GET':
-        os = Cart.objects.filter(django_khalid_id=id)
-        os.delete()
-        return HttpResponseRedirect('/main/viewcart/')
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            os = Cart.objects.filter(django_khalid_id=id)
+            os.delete()
+            return HttpResponseRedirect('/main/viewcart/')
+    
+def SignUp(request):
+    if request.method == "POST":
+        fm = SignUp_Form(request.POST)
+        if fm.is_valid():
+            print(fm)
+            fm.save()
+            fm = SignUp_Form()
+    else:
+        fm = SignUp_Form()
+    return render(request,'signup.html',{'form':fm})
+
+def Login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request,username=username, password=password)
+        if user is not None:
+            login(request,user)
+            return HttpResponseRedirect('/main/cart/')
+        
+    return render(request,'login.html')
+
+def LogOut(request):
+    logout(request)
+    return HttpResponseRedirect('/main/login/')
         
 
 
