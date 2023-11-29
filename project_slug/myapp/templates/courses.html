@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses</title>
+</head>
+<body>
+      {% for i in data %}
+      <h1>{{i}}</h1>
+
+      {% endfor %}
+
+
+      <table>
+        <tr>
+          <th>Course Name</th>
+          <th>Description</th>
+        </tr>
+        {% for j in data %}
+        <tr>
+          <td>{{j.cname}}</td>
+          <td>{{j.desc}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+</body>
+</html>
