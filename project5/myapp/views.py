@@ -1,8 +1,9 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .models import Django_Khalid, Cart
+from .models import Django_Khalid, Cart,Order
 from .forms import django_form, SignUp_Form
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+
 
 
 # Create your views here.
@@ -148,6 +149,16 @@ def Login(request):
 def LogOut(request):
     logout(request)
     return HttpResponseRedirect('/main/login/')
+
+
+def Order_Place(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            product_id = request.POST.get('pid')
+            cart_id = request.POST.get('cid')
+            Order.objects.create(user=request.user,Django_Khalid_id=product_id,cart_id=cart_id)
+            return HttpResponseRedirect('/main/cart/')
+            
         
 
 

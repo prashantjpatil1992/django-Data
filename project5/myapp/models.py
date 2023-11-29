@@ -21,6 +21,6 @@ class Cart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     django_khalid = models.ForeignKey(Django_Khalid, on_delete=models.CASCADE, null=True)
-    car = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     order_id = models.PositiveBigIntegerField(default=1234, null=True)
     
