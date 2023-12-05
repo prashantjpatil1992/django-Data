@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import uuid
 
 # Create your models here.
 class Django_Khalid(models.Model):
@@ -22,5 +24,14 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     django_khalid = models.ForeignKey(Django_Khalid, on_delete=models.CASCADE, null=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
-    order_id = models.PositiveBigIntegerField(default=1234, null=True)
+    time = models.TimeField(auto_now_add=True, null=True)
+    date = models.DateField(auto_now_add=True, null=True)
+    order_id = models.CharField(max_length=100,null=True, unique=True)
+    
+    def save(self,*args,**kwargs):
+        if not self.order_id:
+            current_time = timezone.now()
+            order_id = f"{current_time.strftime('%Y%d%m%H%M%S')}-{uuid.uuid4().hex[:5]}"
+            self.order_id = order_id
+        super().save(*args,**kwargs)
     

@@ -52,20 +52,31 @@
        
       </div>
       <div class="col-lg-10 col-sm-12">
-        <div class="row">
+        <div class="row ">
           {% for i in data %}
-          <div class="col-lg-3 col-sm-12">
-            <figure>
+          <div class="col-lg-3 col-sm-12 mt-5 shadow border">
+            <figure class="mt-2 ">
                  <img src={{i.image.url}} width="100%" height="100" />
                  <figcaption>
                   <p> {{i.id}}, {{i.name}} {{i.age}} years old</p>
                  </figcaption>
             </figure>
 
-            <form action="{% url 'addtocart' %}" method="get">
-              <input type="number" value={{i.id}} name="cid" class="inputhide" />
-              <input type="submit" value="Add To Cart" />
-            </form>
+           <div class="row mb-2">
+            <div class="col-6">
+              <form action="{% url 'addtocart' %}" method="get">
+                <input type="number" value={{i.id}} name="cid" class="inputhide" />
+                <input type="submit" value="Add To Cart" />
+              </form>
+            </div>
+            <div class="col-6">
+              <form action="{% url 'orderplace' %}" method="post">
+                {% csrf_token %}
+                <input type="number" value={{i.id}} name="pid" class="inputhide" />
+                <input type="submit" value="Buy_Now" />
+              </form>
+            </div>
+           </div>
 
           </div>
           {% endfor %}

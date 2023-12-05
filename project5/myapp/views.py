@@ -156,9 +156,18 @@ def Order_Place(request):
         if request.method == "POST":
             product_id = request.POST.get('pid')
             cart_id = request.POST.get('cid')
-            Order.objects.create(user=request.user,Django_Khalid_id=product_id,cart_id=cart_id)
-            return HttpResponseRedirect('/main/cart/')
+            print(product_id)
+            Order.objects.create(user=request.user,django_khalid_id=product_id,cart_id=cart_id)
+            return HttpResponseRedirect('/main/ordermessage/')
             
-        
+def view_order(request):
+    order = Order.objects.all().values_list('django_khalid_id',flat=True)
+    data = Django_Khalid.objects.filter(id__in=order)
+    return render(request, 'view_order.html',{'data':data})
+ 
+def Order_message(request):
+    return render(request,'order_message.html')
 
+
+        
 
