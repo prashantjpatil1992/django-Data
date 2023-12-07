@@ -52,7 +52,9 @@ def cart(request):
         a = Django_Khalid.objects.all()
         cart1 = Cart.objects.filter(user=request.user)
         count = cart1.count()
-        return render (request, 'cart.html',{'data':a, 'cartcount':count})
+        uname = request.user
+        print(uname)
+        return render (request, 'cart.html',{'data':a, 'cartcount':count,'uname':uname})
     else:
         return HttpResponseRedirect('/main/login/')
 

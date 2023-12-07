@@ -8,12 +8,28 @@
     .hide{
       display: none;
     }
+
+    .empty{
+      background-color:aqua;
+      text-align:center;
+      padding: 10%;
+      margin-top:200px;
+    }
+
+    span{
+      color:red;
+      background-color:wheat;
+      padding:5%;
+      text-align:center;
+    }
   </style>
 </head>
 <body>
  
     <div class="container">
       <div class="row">
+        {% if data %}
+
         {% for i in data %}
         <div class="col-4 shadow border ">
           
@@ -50,7 +66,18 @@
 
         </div>
         {% endfor %}
+         
+        {% else %}
+        
+         <div class="empty">
+          <h1><span class="">Emty Cart<span></h1>
+         </div>
+        
+
+        {% endif %}
       </div>
+
+
     </div>
 
 </body>
