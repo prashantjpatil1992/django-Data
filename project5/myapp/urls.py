@@ -18,5 +18,6 @@ urlpatterns = [
      path('logout/',views.LogOut,name='logout'),
      path('orderplace/',views.Order_Place, name='orderplace'),
      path('ordermessage/',views.Order_message, name='ordermessage'),
-     path('vieworder/',views.view_order, name='vieworder')
+     path('vieworder/',views.view_order, name='vieworder'),
+     path('pay/',views.Payment, name="pay")
 ]

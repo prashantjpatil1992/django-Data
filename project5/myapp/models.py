@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
+# from django.utils import timez
+from datetime import datetime
 import uuid
 
 # Create your models here.
@@ -30,7 +31,7 @@ class Order(models.Model):
     
     def save(self,*args,**kwargs):
         if not self.order_id:
-            current_time = timezone.now()
+            current_time = datetime.now()
             order_id = f"{current_time.strftime('%Y%d%m%H%M%S')}-{uuid.uuid4().hex[:5]}"
             self.order_id = order_id
         super().save(*args,**kwargs)

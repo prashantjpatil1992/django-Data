@@ -170,6 +170,23 @@ def view_order(request):
 def Order_message(request):
     return render(request,'order_message.html')
 
+from razorpay import Client
+def Payment(request):
+    client = Client(auth=('rzp_test_dTarhMQVHOxrq5','0WmbuPPl6QyPllcqd6qwoPPk'))
+    amount=500
+    data = { "amount": amount, "currency": "INR", "receipt": "order_rcptid_11" }
+    payment = client.order.create(data=data)
+    context = {}
+    context['amount'] = data['amount']
+    context['crn'] = data['currency']
+    context['email'] =  "abc@gmail.com"
+    
+    return render(request,'pay.html',context)
+
+
+
+
+
 
         
 
