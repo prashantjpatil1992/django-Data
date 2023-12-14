@@ -1,5 +1,5 @@
 from django import forms
-from .models import Django_Khalid
+from .models import Django_Khalid,Address
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -17,4 +17,12 @@ class SignUp_Form(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email']
+        
+        
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = '__all__'
+        
+
     

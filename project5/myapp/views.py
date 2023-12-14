@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .models import Django_Khalid, Cart,Order
+from .models import Django_Khalid, Cart,Order,Address
 from .forms import django_form, SignUp_Form
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -48,13 +48,15 @@ def Delete(request,id):
     
 def cart(request):
     if request.user.is_authenticated:
-        print(request.user)
+        
         a = Django_Khalid.objects.all()
+        
         cart1 = Cart.objects.filter(user=request.user)
         count = cart1.count()
         uname = request.user
-        print(uname)
-        return render (request, 'cart.html',{'data':a, 'cartcount':count,'uname':uname})
+        b = Address.objects.filter(user=request.user).values_list('id',flat=True)
+        print(b)
+        return render (request, 'cart.html',{'data':a, 'cartcount':count,'uname':uname, 'add_id':b})
     else:
         return HttpResponseRedirect('/main/login/')
 
@@ -158,8 +160,10 @@ def Order_Place(request):
         if request.method == "POST":
             product_id = request.POST.get('pid')
             cart_id = request.POST.get('cid')
+            address_id = request.POST.get('aid')
+            print(address_id)
             print(product_id)
-            Order.objects.create(user=request.user,django_khalid_id=product_id,cart_id=cart_id)
+            Order.objects.create(user=request.user,django_khalid_id=product_id,cart_id=cart_id,address_id=address_id)
             return HttpResponseRedirect('/main/ordermessage/')
             
 def view_order(request):
@@ -182,6 +186,23 @@ def Payment(request):
     context['email'] =  "abc@gmail.com"
     
     return render(request,'pay.html',context)
+
+#importing Address Form
+
+
+def Address1(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            city = request.POST.get('city')
+            pincode = request.POST.get('pincode')
+            state = request.POST.get('state')
+            Address.objects.create(city=city,pincode=pincode,state=state, user=request.user)
+            
+        os = Address.objects.filter(user_id=request.user)
+        return render(request,'address.html',{'data':os})
+    else:
+        return HttpResponseRedirect('/main/login/')
+    
 
 
 

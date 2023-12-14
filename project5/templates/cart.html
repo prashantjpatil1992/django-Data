@@ -100,13 +100,20 @@
             <div class="col-6">
               <form action="{% url 'orderplace' %}" method="post">
                 {% csrf_token %}
-                <input type="number" value={{i.id}} name="pid" class="inputhide" />
+                <input type="number" value={{i.id}} name="pid" class="hide" />
+                {% for i in add_id %}
+                  <input type="number" value={{i}} name="aid" class="hide" />
+                   {% endfor %}
+                
                 <input type="submit" value="Buy_Now" />
               </form>
             </div>
            </div>
 
           </div>
+          {% endfor %}
+          {% for i in add_id %}
+       <h1><h1>{{i}}</h1></h1>
           {% endfor %}
         </div>
       </div>

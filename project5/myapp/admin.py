@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Django_Khalid,Cart,Order
+from .models import Django_Khalid,Cart,Order,Address
 
 # Register your models here.
 @admin.register(Django_Khalid)
@@ -11,3 +11,4 @@ class admin1(admin.ModelAdmin):
     
 admin.site.register(Cart)
 admin.site.register(Order)
+admin.site.register(Address)
