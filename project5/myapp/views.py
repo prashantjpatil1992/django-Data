@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .models import Django_Khalid, Cart,Order,Address
+from .models import Django_Khalid, Cart,Order,Address, MyntraCart
 from .forms import django_form, SignUp_Form
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -111,13 +111,13 @@ def view_cart(request):
         # print(cart1)
         cart1 = Cart.objects.filter(user=request.user).values_list('django_khalid_id',flat=True)
         cartdata = Django_Khalid.objects.filter(id__in=cart1)
-        print(cart1)
-        print(request.user)
+
         quantity = Cart.objects.all()
-    
-        # print(quantity.values_list('quantity',flat=True))
-        
-        return render(request, 'show cart.html',{'data':cartdata,'quantity':quantity})
+        amount = Django_Khalid.objects.filter(id__in=cart1).values_list('age',flat=True)
+        amt=0
+        for i in amount:
+            amt=amt+i        
+        return render(request, 'show cart.html',{'data':cartdata,'quantity':quantity, 'amt':amt})
     else:
         return HttpResponseRedirect('/main/login/')
 
@@ -202,8 +202,16 @@ def Address1(request):
         return render(request,'address.html',{'data':os})
     else:
         return HttpResponseRedirect('/main/login/')
-    
+ 
+  
+def MyntraCart1(request):
+    a = MyntraCart.objects.all()
+    return render(request,'index1.html',{'data':a})
 
+def Detail(request,id):
+    a = MyntraCart.objects.get(pk=id)
+    return render(request,'detail.html',{'data':a})
+    
 
 
 

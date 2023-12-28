@@ -93,16 +93,16 @@
            <div class="row mb-2">
             <div class="col-6">
               <form action="{% url 'addtocart' %}" method="get">
-                <input type="number" value={{i.id}} name="cid" class="inputhide" />
+                <input type="number" value={{i.id}} name="cid" class="d-none" />
                 <input type="submit" value="Add To Cart" />
               </form>
             </div>
             <div class="col-6">
               <form action="{% url 'orderplace' %}" method="post">
                 {% csrf_token %}
-                <input type="number" value={{i.id}} name="pid" class="hide" />
+                <input type="number" value={{i.id}} name="pid" class="d-none" />
                 {% for i in add_id %}
-                  <input type="number" value={{i}} name="aid" class="hide" />
+                  <input type="number" value={{i}} name="aid" class="d-none" />
                    {% endfor %}
                 
                 <input type="submit" value="Buy_Now" />

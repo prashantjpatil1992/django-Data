@@ -20,5 +20,8 @@ urlpatterns = [
      path('ordermessage/',views.Order_message, name='ordermessage'),
      path('vieworder/',views.view_order, name='vieworder'),
      path('pay/',views.Payment, name="pay"),
-     path('address/',views.Address1,name='address')
+     path('address/',views.Address1,name='address'),
+     
+     path('index1/',views.MyntraCart1,name='index1'),
+     path('detail/<int:id>',views.Detail,name='detail')
 ]

@@ -44,5 +44,14 @@ class Order(models.Model):
             self.order_id = order_id
         super().save(*args,**kwargs)
         
+        
+class MyntraCart(models.Model):
+    pname = models.CharField(max_length=100,null=True)
+    price = models.IntegerField(null=True)
+    img1 = models.ImageField(upload_to='myntra',null=True)
+    img2 = models.ImageField(upload_to='myntra',null=True)
+    img3 = models.ImageField(upload_to='myntra',null=True)
+    img4 = models.ImageField(upload_to='myntra',null=True)
+        
 
     
